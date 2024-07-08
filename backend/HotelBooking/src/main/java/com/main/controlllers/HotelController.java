@@ -24,6 +24,12 @@ public class HotelController
 	@Autowired
 	private HotelService hotelService;
 	
+	@GetMapping("/welcome")
+	public ResponseEntity<String> welcome()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body("Hello, This is the welcome page");
+	}
+	
 	@PostMapping("/hotel/input")
 	public ResponseEntity<Hotel> insertData(@RequestBody Hotel hotel)
 	{

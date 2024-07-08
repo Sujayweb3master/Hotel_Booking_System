@@ -3,6 +3,7 @@ package com.main.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.main.dao.UserRepository;
@@ -13,6 +14,9 @@ public class UserService
 {
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private PasswordEncoder pw;
 	
 	public User insertUserData(User user)
 	{
@@ -45,5 +49,14 @@ public class UserService
 	public void deleteUserData(Long id)
 	{
 		userRepo.deleteById(id);
+	}
+
+	// for registering user info
+	public User inputUserData(User user) 
+	{
+		String password = user.getPassword();
+		user.setPassword(pw.encode(password));
+		
+		return userRepo.save(user);
 	}
 }

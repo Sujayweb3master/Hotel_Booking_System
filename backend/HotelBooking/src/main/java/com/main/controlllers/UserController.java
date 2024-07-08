@@ -17,33 +17,40 @@ import com.main.model.User;
 import com.main.services.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController 
 {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/user/insert")
+	@PostMapping("/insert")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.insertUserData(user));
     }
+	
+	// for registering the user
+	@PostMapping("/register")
+	public ResponseEntity<User> registerUser(@RequestBody User user)
+	{
+		return ResponseEntity.ok(userService.inputUserData(user));
+	}
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.retrieveUserData(id));
     }
 
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.retrieveAllData());
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUserData(id, user));
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUserData(id);
         return ResponseEntity.noContent().build();

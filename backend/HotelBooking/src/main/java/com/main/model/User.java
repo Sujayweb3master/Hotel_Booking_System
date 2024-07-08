@@ -2,10 +2,13 @@ package com.main.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,8 +31,14 @@ public class User
 	private String email;
 	private String phone;
 	private String password;
+	private String profilePicture;	
+	
 	
 	private String role;
+	
+	@OneToMany(mappedBy = "manager")
+	@JsonManagedReference
+    private Set<Hotel> hotels;
 	
     @OneToMany(mappedBy = "customer")
     private Set<Booking> bookings;

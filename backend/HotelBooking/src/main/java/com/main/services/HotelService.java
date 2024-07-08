@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.main.dao.HotelRepository;
+import com.main.dao.UserRepository;
 import com.main.model.Hotel;
 
 @RestController
@@ -13,6 +14,9 @@ public class HotelService
 {
 	@Autowired
 	private HotelRepository hotelRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	public Hotel insertHotelData(Hotel hotel)
 	{
