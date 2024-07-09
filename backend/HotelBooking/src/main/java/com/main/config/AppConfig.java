@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.main.services.AuthenticateUserDetailsService;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -47,17 +48,18 @@ public class AppConfig
 	@Bean
 	public SecurityFilterChain filter(HttpSecurity http) throws Exception
 	{
-		return http.
-                csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/hotels/hotel/input", "/api/hotels/hotel/{id}", "/api/user/{id}", "/api/user/register")
-                        .permitAll())
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/hotels/**")
-                        .hasRole("MANAGER")
-                		)
-                
-                .build();
+		return http
+	            .csrf().disable()
+	            .authorizeHttpRequests()
+	                .requestMatchers("/api/hotels/hotel/input", "/api/users/user/{id}", "/api/user/register", "/api/hotels/welcome")
+	                .permitAll()
+	                .requestMatchers("/api/hotels/hotel/all")
+	                .hasRole("MANAGER")
+	                .anyRequest()
+	                .authenticated()
+	                .and()
+	            .formLogin().and()
+	            .build();
 			   
 	}
 }

@@ -44,7 +44,7 @@ public class HotelController
 	}
 	
 	@GetMapping("/hotel/all")
-	public ResponseEntity<List<Hotel>> getAllData(@PathVariable Long id)
+	public ResponseEntity<List<Hotel>> getAllData()
 	{
 		return ResponseEntity.ok(hotelService.retrieveAllData());
 	}
